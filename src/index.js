@@ -5,12 +5,12 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 
 import App from './App';
-import List from './component/List';
-import Detail from './component/Detail';
-import Login from './component/Login';
+import List from './pages/List';
+import Detail from './pages/Detail';
+import Login from './pages/Login';
+import Navbar from './component/navbar/Navbar';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-
 
 /*
   [유저 스토리]
@@ -26,6 +26,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
+      <Navbar />
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/login" element={<Login />} />

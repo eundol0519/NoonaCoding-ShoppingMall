@@ -1,7 +1,7 @@
 import React from "react";
 
-const Navbar = () => {
+const Login = () => {
   return <div></div>;
 };
 
-export default Navbar;
+export default Login;
