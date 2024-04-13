@@ -24,7 +24,7 @@ const List = () => {
       {list ? (
         list.map((item) => {
           return (
-            <React.Fragment>
+            <React.Fragment key={item}>
               <Card data={item} />
             </React.Fragment>
           );

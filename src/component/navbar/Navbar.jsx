@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 
 import styles from "./Navbar.module.css";
 
@@ -7,13 +7,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 
 import SideBar from "../sidebar/SideBar";
+import LoginContext from "../../context/login";
 
 const Navbar = () => {
   const color = "#fff";
   const menuList = ["여성", "Devided", "남성", "신생아/유아", "H&M Home", "Sale", "지속가능성"];
 
+  const { login, setLogin } = useContext(LoginContext);
+
   const [search, setSearch] = useState();
   const [sideBarOpen, setSideBarOpen] = useState(false);
+
   const searchRef = useRef();
 
   const inputHandler = (e) => {
@@ -31,8 +35,19 @@ const Navbar = () => {
     }
   };
 
+  const enterHandler = (e) => {
+    if (e.key === "Enter") {
+      searchHandler();
+    }
+  };
+
+  const logoutHandler = () => {
+    alert("로그아웃 되었습니다.");
+    setLogin(false);
+  };
+
   return (
-    <div>
+    <React.Fragment>
       <div className={styles.navbar}>
         <FontAwesomeIcon
           className={styles.bar}
@@ -43,9 +58,13 @@ const Navbar = () => {
         />
         <div className={styles.login}>
           <FontAwesomeIcon icon={faUser} color={color} />
-          <Link to="/login">
-            <p>로그인</p>
-          </Link>
+          {!login ? (
+            <Link to="/login">
+              <p>로그인</p>
+            </Link>
+          ) : (
+            <p onClick={logoutHandler}>로그아웃</p>
+          )}
         </div>
       </div>
       <div className={styles.logo}>
@@ -65,11 +84,11 @@ const Navbar = () => {
         </div>
         <div className={styles.search}>
           <FontAwesomeIcon icon={faSearch} color={color} onClick={searchHandler} />
-          <input ref={searchRef} value={search} onChange={inputHandler} />
+          <input ref={searchRef} value={search} onChange={inputHandler} onKeyDown={enterHandler} />
         </div>
       </div>
       <SideBar sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} />
-    </div>
+    </React.Fragment>
   );
 };
 
