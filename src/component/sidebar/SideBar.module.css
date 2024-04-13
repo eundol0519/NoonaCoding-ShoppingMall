@@ -1,0 +1,51 @@
+.sideBar {
+    height: 100vh;
+    background: white;
+    padding: 15px;
+    position: fixed;
+    top: 0;
+    z-index: 11;
+    border-right: 1px solid #e1e1e1;
+    width: 250px;
+    transition: 0.5s ease-in-out;
+}
+
+.sideBar.open {
+    left: 0;
+}
+
+.sideBar.close {
+    left: -250px;
+}
+
+.sideBar svg {
+    float: right;
+    margin-top: 17px;
+    cursor: pointer;
+}
+
+.menuList {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 100px;
+    user-select: none;
+}
+
+.menuList p {
+    cursor: pointer;
+}
+
+.sideBar svg:hover,
+.menuList p:hover {
+    font-weight: 700;
+    color: #4b89dc;
+}
+
+@media screen and (min-width: 1201px) {
+    .sideBar {
+        display: none;
+    }
+}

@@ -2,15 +2,18 @@ import React, { useRef, useState } from "react";
 
 import styles from "./Navbar.module.css";
 
-import { faSearch, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faUser, faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
+
+import SideBar from "../sidebar/SideBar";
 
 const Navbar = () => {
   const color = "#fff";
   const menuList = ["여성", "Devided", "남성", "신생아/유아", "H&M Home", "Sale", "지속가능성"];
 
   const [search, setSearch] = useState();
+  const [sideBarOpen, setSideBarOpen] = useState(false);
   const searchRef = useRef();
 
   const inputHandler = (e) => {
@@ -31,22 +34,31 @@ const Navbar = () => {
   return (
     <div>
       <div className={styles.navbar}>
-        <Link to="/login">
-          <div className={styles.login}>
-            <FontAwesomeIcon icon={faUser} color={color} />
+        <FontAwesomeIcon
+          className={styles.bar}
+          icon={faBars}
+          onClick={() => {
+            setSideBarOpen(true);
+          }}
+        />
+        <div className={styles.login}>
+          <FontAwesomeIcon icon={faUser} color={color} />
+          <Link to="/login">
             <p>로그인</p>
-          </div>
-        </Link>
+          </Link>
+        </div>
       </div>
       <div className={styles.logo}>
         <Link to="/">
           <img src="logo.png" width={100} height={45} alt="logo" />
         </Link>
+      </div>
+      <div className={styles.menu}>
         <div className={styles.menuList}>
           {menuList.map((item) => {
             return (
-              <Link to="/products">
-                <p key={item}>{item}</p>
+              <Link to="/products" key={item}>
+                <p>{item}</p>
               </Link>
             );
           })}
@@ -56,6 +68,7 @@ const Navbar = () => {
           <input ref={searchRef} value={search} onChange={inputHandler} />
         </div>
       </div>
+      <SideBar sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} />
     </div>
   );
 };
