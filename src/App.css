@@ -1,5 +1,5 @@
 html {
-    height: 150vh;
-    background: linear-gradient(rgba(75, 137, 220, 0.5) 0%, rgb(255, 255, 255) 80%);
+    min-height: 100vh;
+    background: linear-gradient(rgba(75, 137, 220, 0.5) 0%, rgb(255, 255, 255) 90%);
     overflow-y: scroll;
 }

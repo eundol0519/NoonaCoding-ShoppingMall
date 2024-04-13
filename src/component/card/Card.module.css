@@ -1,0 +1,58 @@
+.card {
+    width: 200px;
+    height: 350px;
+    background: none;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 2px 7px 15px 8px rgba(0, 0, 0, 0.1);
+    user-select: none;
+    padding: 15px;
+    cursor: pointer;
+}
+
+.card:hover {
+    transform: scale(1.2);
+    background: white;
+}
+
+.card h5 {
+    max-width: 170px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    word-break: break-all;
+}
+
+.card img {
+    border-radius: 8px;
+}
+
+.card span {
+    height: 20px;
+    font-size: 13px;
+    color: green;
+}
+
+.card h5 {
+    margin: 10px 0;
+}
+
+.card p {
+    margin-bottom: 10px;
+}
+
+.card .new {
+    height: 20px;
+    color: red;
+    font-weight: 600;
+    animation: blinkEffect 1s step-end infinite;
+}
+
+@keyframes blinkEffect {
+    50% {
+        opacity: 0;
+    }
+}

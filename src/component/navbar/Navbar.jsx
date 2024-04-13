@@ -44,7 +44,11 @@ const Navbar = () => {
         </Link>
         <div className={styles.menuList}>
           {menuList.map((item) => {
-            return <p key={item}>{item}</p>;
+            return (
+              <Link to="/products">
+                <p key={item}>{item}</p>
+              </Link>
+            );
           })}
         </div>
         <div className={styles.search}>
