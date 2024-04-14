@@ -14,13 +14,9 @@ const List = () => {
   const getProducts = async () => {
     let searchQuery = query.get("q") || "";
 
-    console.log(searchQuery);
-
     await axios
-      .get(`http://localhost:5000/products?q=${searchQuery}`)
-      .then((res) => {
-        setList(res.data);
-      })
+      .get(`https://my-json-server.typicode.com/eundol0519/NoonaCoding-ShoppingMall/products?q=${searchQuery}`)
+      .then((res) => setList(res.data))
       .catch((error) => console.error(error));
   };
 
