@@ -1,0 +1,85 @@
+.wrap {
+    width: 500px;
+    height: 700px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    gap: 40px;
+}
+
+.wrap img {
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.wrap img:hover {
+    transform: scale(1.1);
+    border: 4px solid #4b89dc;
+}
+
+.new {
+    height: 20px;
+    color: red;
+    font-weight: 600;
+    animation: blinkEffect 1s step-end infinite;
+}
+
+@keyframes blinkEffect {
+    50% {
+        opacity: 0;
+    }
+}
+
+.choice {
+    color: green;
+}
+
+.dropdown {
+    position: relative;
+    width: 200px;
+    margin: 10px 0;
+}
+
+.dropdownToggle {
+    width: 200px;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.dropdownMenu {
+    width: 200px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    padding: 8px 0;
+    margin-top: 4px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    list-style: none;
+}
+
+.dropdownMenu li {
+    padding: 8px 12px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.dropdownMenu li:hover {
+    background-color: #f0f0f0;
+}
+
+.wrap .addBtn {
+    width: 200px;
+    height: 40px;
+    padding: 5px 10px;
+    border: none;
+    background: #4b89dc;
+    color: white;
+    border-radius: 8px;
+}

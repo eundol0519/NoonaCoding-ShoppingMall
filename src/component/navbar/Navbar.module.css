@@ -73,6 +73,10 @@
     color: white;
 }
 
+.logout {
+    cursor: pointer;
+}
+
 @media screen and (max-width: 1200px) {
     .navbar {
         display: flex;

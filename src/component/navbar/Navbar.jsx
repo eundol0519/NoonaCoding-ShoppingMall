@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 
 import SideBar from "../sidebar/SideBar";
-import LoginContext from "../../context/login";
+import LoginContext from "../../contexts/login";
 
 const Navbar = () => {
   const color = "#fff";
@@ -63,13 +63,15 @@ const Navbar = () => {
               <p>로그인</p>
             </Link>
           ) : (
-            <p onClick={logoutHandler}>로그아웃</p>
+            <p className={styles.logout} onClick={logoutHandler}>
+              로그아웃
+            </p>
           )}
         </div>
       </div>
       <div className={styles.logo}>
         <Link to="/">
-          <img src="logo.png" width={100} height={45} alt="logo" />
+          <img src="/logo.png" width={100} height={45} alt="logo" />
         </Link>
       </div>
       <div className={styles.menu}>
