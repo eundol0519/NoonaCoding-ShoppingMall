@@ -4,7 +4,7 @@ import styles from "./Navbar.module.css";
 
 import { faSearch, faUser, faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import SideBar from "../sidebar/SideBar";
 import LoginContext from "../../contexts/login";
@@ -14,6 +14,8 @@ const Navbar = () => {
   const menuList = ["여성", "Devided", "남성", "신생아/유아", "H&M Home", "Sale", "지속가능성"];
 
   const { login, setLogin } = useContext(LoginContext);
+
+  const navigate = useNavigate();
 
   const [search, setSearch] = useState();
   const [sideBarOpen, setSideBarOpen] = useState(false);
@@ -27,9 +29,8 @@ const Navbar = () => {
 
   const searchHandler = () => {
     if (searchRef.current !== search && search) {
-      alert("검색");
-      // 검색 api 요청
       searchRef.current = search;
+      navigate(`?q=${search}`);
     } else {
       alert("검색어가 없거나 동일한 검색어입니다. 다시 시도해주세요.");
     }

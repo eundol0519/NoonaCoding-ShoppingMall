@@ -4,27 +4,36 @@ import Spinner from "../../element/Spinner";
 
 import styles from "./List.module.css";
 import Card from "../../component/card/Card";
+import { useSearchParams } from "react-router-dom";
 
 const List = () => {
   const [list, setList] = useState();
 
+  const [query, setQuery] = useSearchParams();
+
   const getProducts = async () => {
+    let searchQuery = query.get("q") || "";
+
+    console.log(searchQuery);
+
     await axios
-      .get("http://localhost:5000/products")
-      .then((res) => setList(res.data))
+      .get(`http://localhost:5000/products?q=${searchQuery}`)
+      .then((res) => {
+        setList(res.data);
+      })
       .catch((error) => console.error(error));
   };
 
   useEffect(() => {
     getProducts();
-  }, []);
+  }, [query]);
 
   return (
     <div className={styles.wrap}>
       {list ? (
         list.map((item) => {
           return (
-            <React.Fragment key={item}>
+            <React.Fragment key={item.id}>
               <Card data={item} />
             </React.Fragment>
           );
