@@ -1,21 +1,29 @@
 import { useState } from "react";
-
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-
 import Main from "./pages/Main";
 import List from "./pages/list/List";
 import Detail from "./pages/detail/Detail";
 import Login from "./pages/login/Login";
 import Navbar from "./component/navbar/Navbar";
-import LoginContext from "./contexts/login.js";
+import LoginContext from "./contexts/login";
 
 import "./App.css";
+
+interface LoginContextValue {
+  login: boolean;
+  setLogin: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
 function App() {
   const [login, setLogin] = useState(true);
 
+  const contextValue: LoginContextValue = {
+    login,
+    setLogin,
+  };
+
   return (
-    <LoginContext.Provider value={{ login, setLogin }}>
+    <LoginContext.Provider value={contextValue}>
       <BrowserRouter>
         <Navbar />
         <Routes>

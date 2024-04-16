@@ -6,15 +6,35 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import styles from "./SideBar.module.css";
 
-const SideBar = ({ sideBarOpen, setSideBarOpen }) => {
-  const menuList = ["여성", "Devided", "남성", "신생아/유아", "H&M Home", "Sale", "지속가능성"];
+interface PropsType {
+  sideBarOpen: boolean;
+  setSideBarOpen: (prev: boolean) => void;
+}
 
-  const sideBarRef = useRef();
+const SideBar = (props: PropsType) => {
+  const { sideBarOpen, setSideBarOpen } = props;
+
+  const menuList = [
+    "여성",
+    "Devided",
+    "남성",
+    "신생아/유아",
+    "H&M Home",
+    "Sale",
+    "지속가능성",
+  ];
+
+  const sideBarRef = useRef<HTMLDivElement | null>(null);
 
   // 사이드바 외부 영역 클릭 시
   useEffect(() => {
-    const handleClick = (e) => {
-      if (sideBarRef.current && !sideBarRef.current.contains(e.target)) {
+    const handleClick: EventListener = (e) => {
+      const mouseEvent = e as MouseEvent;
+
+      if (
+        sideBarRef.current &&
+        !sideBarRef.current.contains(mouseEvent.target as Node)
+      ) {
         setSideBarOpen(false);
       }
     };
@@ -27,7 +47,12 @@ const SideBar = ({ sideBarOpen, setSideBarOpen }) => {
   }, [sideBarRef]);
 
   return (
-    <div ref={sideBarRef} className={`${styles.sideBar} ${sideBarOpen ? styles.open : styles.close}`}>
+    <div
+      ref={sideBarRef}
+      className={`${styles.sideBar} ${
+        sideBarOpen ? styles.open : styles.close
+      }`}
+    >
       <FontAwesomeIcon icon={faClose} onClick={() => setSideBarOpen(false)} />
       <div className={styles.menuList}>
         {menuList.map((item) => {

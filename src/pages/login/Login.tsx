@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import LoginContext from "../../contexts/login";
 import { useNavigate } from "react-router-dom";
 
@@ -9,9 +9,12 @@ import styles from "./Login.module.css";
 const Login = () => {
   const { setLogin } = useContext(LoginContext);
   const navigate = useNavigate();
-  const [userInfo, setUserInfo] = useState({ id: "", password: "" });
+  const [userInfo, setUserInfo] = useState<{ id: string; password: string }>({
+    id: "",
+    password: "",
+  });
 
-  const inputHandler = (e) => {
+  const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setUserInfo((prev) => ({ ...prev, [name]: value }));
   };
@@ -30,7 +33,7 @@ const Login = () => {
     }
   };
 
-  const enterHandler = (e) => {
+  const enterHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       loginHandler();
     }
@@ -40,11 +43,24 @@ const Login = () => {
     <form className={styles.wrap}>
       <label>
         아이디
-        <input type="email" name="id" placeholder="email" value={userInfo.id} onChange={inputHandler} />
+        <input
+          type="email"
+          name="id"
+          placeholder="email"
+          value={userInfo.id}
+          onChange={inputHandler}
+        />
       </label>
       <label>
         비밀번호
-        <input type="password" name="password" placeholder="password" value={userInfo.password} onChange={inputHandler} onKeyDown={enterHandler} />
+        <input
+          type="password"
+          name="password"
+          placeholder="password"
+          value={userInfo.password}
+          onChange={inputHandler}
+          onKeyDown={enterHandler}
+        />
       </label>
       <button onClick={loginHandler}>로그인</button>
     </form>

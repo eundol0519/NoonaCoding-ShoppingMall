@@ -1,10 +1,12 @@
-import React, { useId } from "react";
+import { useId } from "react";
 
 import styles from "./Card.module.css";
 import { useNavigate } from "react-router-dom";
 import { amountRegex } from "../../utils/regex";
 
-const Card = ({ data }) => {
+import { ItemType } from "../../types/index";
+
+const Card = ({ data }: { data: ItemType }) => {
   const id = useId();
   const navigate = useNavigate();
 
