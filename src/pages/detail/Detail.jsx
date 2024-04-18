@@ -1,52 +1,48 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-import LoginContext from "../../contexts/login";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
 import Spinner from "../../element/Spinner";
 
 import styles from "./Detail.module.css";
 import { amountRegex } from "../../utils/regex";
-import { ItemType } from "../../types";
+import { useDispatch, useSelector } from "react-redux";
+import { productAction } from "../../redux/actions/productAction";
 
 const Detail = () => {
-  const { login } = useContext(LoginContext);
   const { id } = useParams();
 
   const navigate = useNavigate();
 
-  const dropDownRef = useRef<HTMLDivElement | null>(null);
+  const dispatch = useDispatch();
+  const authenticate = useSelector((state) => state.auth.authenticate);
+  const productDetail = useSelector((state) => state.product.productDetail);
 
-  const [data, setData] = useState<ItemType>();
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [selectedValue, setSelectedValue] = useState<string>("");
+  const dropDownRef = useRef(null);
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedValue, setSelectedValue] = useState("");
 
   useEffect(() => {
-    if (!login) {
+    if (!authenticate) {
       alert("로그인 후 이용해주세요.");
       navigate("/login");
     }
-  }, [login]);
+  }, [authenticate]);
 
   useEffect(() => {
     getProductDetail();
   }, []);
 
   const getProductDetail = async () => {
-    await axios
-      .get(
-        `https://my-json-server.typicode.com/eundol0519/NoonaCoding-ShoppingMall/products/${id}`,
-      )
-      .then((res) => setData(res.data))
-      .catch((error) => console.error(error));
+    dispatch(productAction.getProductDetail(id));
   };
 
   useEffect(() => {
-    const handleClick: EventListener = (e) => {
-      const mouseEvent = e as MouseEvent;
+    const handleClick = (e) => {
+      const mouseEvent = e;
 
       if (
         dropDownRef.current &&
-        !dropDownRef.current.contains(mouseEvent.target as Node)
+        !dropDownRef.current.contains(mouseEvent.target)
       ) {
         setIsOpen(false);
       }
@@ -63,23 +59,31 @@ const Detail = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleSelectOption = (option: string) => {
+  const handleSelectOption = (option) => {
     setSelectedValue(option);
     setIsOpen(false);
   };
 
   return (
     <>
-      {data ? (
+      {productDetail ? (
         <div className={styles.wrap}>
-          <img src={data.img} width={300} alt={`productDetailImg${id}`} />
+          <img
+            src={productDetail.img}
+            width={300}
+            alt={`productDetailImg${id}`}
+          />
           <div>
-            <span className={styles.new}>{data.new ? "new" : null}</span>
+            <span className={styles.new}>
+              {productDetail.new ? "new" : null}
+            </span>
             <p className={styles.choice}>
-              {data.choice ? "concious choice" : null}
+              {productDetail.choice ? "concious choice" : null}
             </p>
-            <h3>{data.title}</h3>
-            <h5>￦ {String(data.price).replaceAll(amountRegex, ",")}</h5>
+            <h3>{productDetail.title}</h3>
+            <h5>
+              ￦ {String(productDetail.price).replaceAll(amountRegex, ",")}
+            </h5>
             <div className={styles.dropdown} ref={dropDownRef}>
               <button
                 className={styles.dropdownToggle}
@@ -89,7 +93,7 @@ const Detail = () => {
               </button>
               {isOpen && (
                 <ul className={styles.dropdownMenu}>
-                  {data.size.map((item) => (
+                  {productDetail.size.map((item) => (
                     <li key={item} onClick={() => handleSelectOption(item)}>
                       {item}
                     </li>

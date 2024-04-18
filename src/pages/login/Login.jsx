@@ -1,20 +1,23 @@
-import { useContext, useState } from "react";
-import LoginContext from "../../contexts/login";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { emailRegex } from "../../utils/regex";
 
 import styles from "./Login.module.css";
+import { useDispatch } from "react-redux";
+import { authenticateAction } from "../../redux/actions/authenticateAction";
 
 const Login = () => {
-  const { setLogin } = useContext(LoginContext);
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
-  const [userInfo, setUserInfo] = useState<{ id: string; password: string }>({
+
+  const [userInfo, setUserInfo] = useState({
     id: "",
     password: "",
   });
 
-  const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const inputHandler = (e) => {
     const { name, value } = e.target;
     setUserInfo((prev) => ({ ...prev, [name]: value }));
   };
@@ -25,15 +28,14 @@ const Login = () => {
         alert("아이디는 이메일 형식으로 적어주세요.");
         return;
       }
-      setLogin(true);
-      alert("로그인 되었습니다.");
+      dispatch(authenticateAction.login({ ...userInfo }));
       navigate("/products");
     } else {
       alert("아이디 혹은 비밀번호를 입력 후 다시 시도해주세요.");
     }
   };
 
-  const enterHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const enterHandler = (e) => {
     if (e.key === "Enter") {
       loginHandler();
     }

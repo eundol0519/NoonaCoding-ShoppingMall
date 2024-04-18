@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 
 import styles from "./Navbar.module.css";
 
@@ -7,21 +7,28 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useNavigate } from "react-router-dom";
 
 import SideBar from "../sidebar/SideBar";
-import LoginContext from "../../contexts/login";
+import { useDispatch, useSelector } from "react-redux";
+
+const color = "#fff";
+const menuList = [
+  "여성",
+  "Devided",
+  "남성",
+  "신생아/유아",
+  "H&M Home",
+  "Sale",
+  "지속가능성",
+];
 
 const Navbar = () => {
-  const color = "#fff";
-  const menuList = [
-    "여성",
-    "Devided",
-    "남성",
-    "신생아/유아",
-    "H&M Home",
-    "Sale",
-    "지속가능성",
-  ];
+  let beforeSearch: string = "";
 
-  const { login, setLogin } = useContext(LoginContext);
+  const dispatch = useDispatch();
+  const authenticate = useSelector(
+    (state: { auth: { authenticate: boolean } }) => state.auth.authenticate,
+  );
+
+  console.log(authenticate);
 
   const navigate = useNavigate();
 
@@ -43,7 +50,11 @@ const Navbar = () => {
     //   alert("검색어가 없거나 동일한 검색어입니다. 다시 시도해주세요.");
     // }
 
-    navigate(`/products?q=${search}`);
+    if (beforeSearch !== search && search) {
+      navigate(`?q=${search}`);
+    } else {
+      alert("검색어가 없거나 동일한 검색어입니다. 다시 시도해주세요.");
+    }
   };
 
   const enterHandler = (e: React.KeyboardEvent) => {
@@ -54,7 +65,7 @@ const Navbar = () => {
 
   const logoutHandler = () => {
     alert("로그아웃 되었습니다.");
-    setLogin(false);
+    dispatch({ type: "LOGOUT_SUCCESS" });
   };
 
   return (
@@ -69,7 +80,7 @@ const Navbar = () => {
         />
         <div className={styles.login}>
           <FontAwesomeIcon icon={faUser} color={color} />
-          {!login ? (
+          {!authenticate ? (
             <Link to="/login">
               <p>로그인</p>
             </Link>
