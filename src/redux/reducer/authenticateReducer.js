@@ -1,18 +1,27 @@
+import { createSlice } from "@reduxjs/toolkit"
+
 const initialState = {
     id: '',
     password: '',
     authenticate: false
 }
 
-function authenticateReducer(state = initialState, action) {
-    switch (action.type) {
-        case "LOGIN_SUCCESS":
-            return { ...state, id: action.payload.id, password: action.payload.password, authenticate: true }
-        case "LOGOUT_SUCCESS":
-            return { ...state, id: '', password: '', authenticate: false }
-        default:
-            return state
+const authenticateSlice = createSlice({
+    name: "authenticate",
+    initialState: initialState,
+    reducers: {
+        login(state, action) {
+            state.id = action.payload.id;
+            state.password = action.payload.password;
+            state.authenticate = true;
+        },
+        logout(state) {
+            state.id = '';
+            state.password = '';
+            state.authenticate = false;
+        }
     }
-}
+})
 
-export default authenticateReducer
+export const authenticateActions = authenticateSlice.actions
+export default authenticateSlice.reducer
