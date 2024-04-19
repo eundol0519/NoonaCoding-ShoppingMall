@@ -4,8 +4,8 @@ import Spinner from "../../element/Spinner";
 import styles from "./List.module.css";
 import Card from "../../component/card/Card";
 import { useSearchParams } from "react-router-dom";
-import { productAction } from "../../redux/actions/productAction";
 import { useDispatch, useSelector } from "react-redux";
+import { getProducts } from "../../redux/slice/productSlice";
 
 const List = () => {
   const [query, setQuery] = useSearchParams();
@@ -13,14 +13,14 @@ const List = () => {
   const list = useSelector((state) => state.product.productList);
   const dispatch = useDispatch();
 
-  const getProducts = async () => {
-    let searchQuery = query.get("q") || "";
-    dispatch(productAction.getProducts(searchQuery));
-  };
-
   useEffect(() => {
-    getProducts();
+    getProductsHandler();
   }, [query]);
+
+  const getProductsHandler = async () => {
+    let searchQuery = query.get("q") || "";
+    dispatch(getProducts(searchQuery));
+  };
 
   return (
     <div className={styles.wrap}>

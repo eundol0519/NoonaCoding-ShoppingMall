@@ -5,7 +5,7 @@ import { emailRegex } from "../../utils/regex";
 
 import styles from "./Login.module.css";
 import { useDispatch } from "react-redux";
-import { authenticateAction } from "../../redux/actions/authenticateAction";
+import { authenticateActions } from "../../redux/slice/authenticateSlice";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ const Login = () => {
         alert("아이디는 이메일 형식으로 적어주세요.");
         return;
       }
-      dispatch(authenticateAction.login({ ...userInfo }));
+      dispatch(authenticateActions.login({ ...userInfo }));
       navigate("/products");
     } else {
       alert("아이디 혹은 비밀번호를 입력 후 다시 시도해주세요.");

@@ -5,7 +5,7 @@ import Spinner from "../../element/Spinner";
 import styles from "./Detail.module.css";
 import { amountRegex } from "../../utils/regex";
 import { useDispatch, useSelector } from "react-redux";
-import { productAction } from "../../redux/actions/productAction";
+import { getProductDetail } from "../../redux/slice/productSlice";
 
 const Detail = () => {
   const { id } = useParams();
@@ -25,16 +25,10 @@ const Detail = () => {
     if (!authenticate) {
       alert("로그인 후 이용해주세요.");
       navigate("/login");
+    } else {
+      dispatch(getProductDetail(id));
     }
   }, [authenticate]);
-
-  useEffect(() => {
-    getProductDetail();
-  }, []);
-
-  const getProductDetail = async () => {
-    dispatch(productAction.getProductDetail(id));
-  };
 
   useEffect(() => {
     const handleClick = (e) => {

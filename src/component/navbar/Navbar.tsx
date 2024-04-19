@@ -28,8 +28,6 @@ const Navbar = () => {
     (state: { auth: { authenticate: boolean } }) => state.auth.authenticate,
   );
 
-  console.log(authenticate);
-
   const navigate = useNavigate();
 
   const [search, setSearch] = useState<string>("");
